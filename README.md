@@ -9,7 +9,7 @@ $ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -no
 
 ### Run an https server
 ```bash
-$ sudo openssl s_server -key key.pem -cert cert.pem -accept 443 -www```
+$ sudo openssl s_server -key key.pem -cert cert.pem -accept 443 -www
 ```
 ### Generate a self signed certificate and key for domain1
 ```bash
