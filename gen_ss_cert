@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Script to generate a self signed certificate.
+
+openssl req \
+    -x509 \
+    -newkey rsa:2048 \
+    -keyout key.pem \
+    -out cert.pem \
+    -days 365 \
+    -subj "/C=GB/ST=Staffs/L=Stoke/O=RKC/CN=www.domain1.com" \
+    -nodes
