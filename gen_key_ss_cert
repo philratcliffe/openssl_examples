@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Script to generate a self signed certificate.
+# Script to generate a key and self signed certificate.
 
 openssl req \
     -x509 \
