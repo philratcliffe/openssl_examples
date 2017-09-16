@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Script to generate keys and certs needed when running an SNI server 
+
+openssl req \
+    -x509 \
+    -newkey rsa:2048 \
+    -days 365 \
+    -out domain1.cert.pem \
+    -keyout domain1.key.pem \
+    -config domain1.config \
+    -subj "/C=GB/ST=Staffs/L=Stoke/O=RKC/CN=www.domain1.com" \
+    -nodes
+
+openssl req \
+    -x509 \
+    -newkey rsa:2048 \
+    -days 365 \
+    -out domain2.cert.pem \
+    -keyout domain2.key.pem \
+    -config domain2.config \
+    -subj "/C=GB/ST=Staffs/L=Stoke/O=RKC/CN=www.domain2.com" \
+    -nodes
