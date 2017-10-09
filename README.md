@@ -11,6 +11,20 @@ $ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -no
 ```bash
 $ sudo openssl s_server -key key.pem -cert cert.pem -accept 443 -www
 ```
+
+### Run an insecure SSLv2 server for testing purposes
+SSLv2 is NOT secure! SSLv2 should only be used for test purposes. For example,
+if you are writing a client that identifies servers that still support the 
+insecure SSLv2 protocol.
+
+NOTE: ssl2 support is disabled by default with the latest versions of OpenSSL. 
+Therefore, you will need to get source and compile it with ssl2 enabled to
+run the command below.
+
+```bash
+$ sudo openssl s_server -ssl2 -key key.pem -cert cert.pem -accept 443 -www
+```
+
 ### Generate a self signed certificate and key for domain1
 ```bash
 $ openssl req -config domain1.config -new -x509 -sha256 -newkey rsa:2048 -nodes -keyout domain1.key.pem -days 365 -out domain1.cert.pem
