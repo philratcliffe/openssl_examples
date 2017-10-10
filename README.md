@@ -18,8 +18,8 @@ if you are writing a client that identifies servers that still support the
 insecure SSLv2 protocol.
 
 NOTE: ssl2 support is disabled by default with the latest versions of OpenSSL. 
-Therefore, you will need to get source and compile it with ssl2 enabled to
-run the command below.
+To run the command below you will need to get the OpenSSL source and compile
+it with ssl2 enabled.
 
 ```bash
 $ sudo openssl s_server -ssl2 -key key.pem -cert cert.pem -accept 443 -www
