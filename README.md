@@ -14,8 +14,8 @@ $ sudo openssl s_server -key key.pem -cert cert.pem -accept 443 -www
 
 ### Run an insecure SSLv2 server for testing purposes
 SSLv2 is NOT secure! SSLv2 should only be used for test purposes. For example,
-if you are writing a client that identifies servers that still support the 
-insecure SSLv2 protocol.
+to test a client that identifies servers that still support the insecure SSLv2 
+protocol.
 
 NOTE: ssl2 support is disabled by default with the latest versions of OpenSSL. 
 To run the command below you will need to get the OpenSSL source and compile
