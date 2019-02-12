@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Script to run an HTTPS server. Assumes that the key and cert has been
+# genertated and are in the same directory as this script. 
+
+sudo openssl s_server -key domain1.key.pem -cert domain1.cert.pem -accept 443 -www
+
