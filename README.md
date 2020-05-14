@@ -43,4 +43,3 @@ domain2.com).
 $ sudo openssl s_server -accept 443 -www -servername www.domain1.com -cert domain1.cert.pem -key domain1.key.pem -servername www.domain2.com -cert2
 domain2.cert.pem -key2 domain2.key.pem
 ```
-
