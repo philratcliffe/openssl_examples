@@ -3,4 +3,51 @@
 # Script to run an SNI server. Assumes that the keys and certs have been
 # genertated and are in the same directory as this script. 
 
-sudo openssl s_server -accept 443 -www -servername www.domain1.com -cert domain1.cert.pem -key domain1.key.pem -servername www.domain2.com -cert2 domain2.cert.pem -key2 domain2.key.pem
+#!/bin/bash
+
+# Script to run an SNI server. Assumes that the keys and certs have been
+# generated and are in the same directory as this script.
+
+echo "Determining local IP addresses..."
+
+# Attempt to find non-loopback IP addresses (works on macOS and many Linux distros)
+# Uses 'ifconfig' primarily for macOS compatibility, falls back to 'ip addr' if needed
+# Filters out loopback (127.0.0.1, ::1)
+if command -v ifconfig &> /dev/null; then
+    # Using ifconfig (common on macOS)
+    IP_ADDRESSES=$(ifconfig | grep -E 'inet |inet6 ' | grep -v '127\.0\.0\.1' | grep -v '::1' | awk '{print $2}' | cut -d% -f1)
+elif command -v ip &> /dev/null; then
+    # Using ip addr (common on modern Linux)
+    IP_ADDRESSES=$(ip addr | grep -E 'inet |inet6 ' | grep -v '127\.0\.0\.1' | grep -v '::1' | awk '{print $2}' | cut -d/ -f1)
+else
+    IP_ADDRESSES=""
+    echo "Warning: Could not find 'ifconfig' or 'ip' command to determine local IP addresses."
+fi
+
+# Check if we found any IPs
+if [ -z "$IP_ADDRESSES" ]; then
+  echo "Could not automatically determine specific local IP addresses."
+  echo "OpenSSL s_server will attempt to listen on port 443 on all available interfaces (e.g., 0.0.0.0 for IPv4, :: for IPv6)."
+else
+  echo "OpenSSL s_server will attempt to listen on port 443, likely binding to the following IP addresses:"
+  # Print each IP on a new line for clarity
+  echo "$IP_ADDRESSES" | while IFS= read -r ip; do echo "  - $ip"; done
+  echo "(Server actually binds to 0.0.0.0 or :: unless IP specified in -accept)"
+fi
+
+echo "-----------------------------------------------------"
+echo "Starting OpenSSL s_server on port 443..."
+echo "(Requires sudo password if not recently entered)"
+echo "Use Ctrl+C to stop the server."
+echo "-----------------------------------------------------"
+
+# The actual server command
+# Note: '-accept 443' without an IP means it listens on all interfaces (0.0.0.0 / ::) on port 443
+sudo openssl s_server -accept 443 -www \
+    -servername www.domain1.com -cert domain1.cert.pem -key domain1.key.pem \
+    -servername www.domain2.com -cert2 domain2.cert.pem -key2 domain2.key.pem
+
+# Optional: Add a message when the script exits after server is stopped
+echo "-----------------------------------------------------"
+echo "OpenSSL s_server stopped."
+echo "-----------------------------------------------------"
