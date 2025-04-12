@@ -3,5 +3,8 @@
 # Script to run an HTTPS server. Assumes that the key and cert has been
 # genertated and are in the same directory as this script. 
 
+
+# to disable tls versions use this
+#sudo openssl s_server -key domain1.key.pem -cert domain1.cert.pem -accept 443 -www -no_tls1_3 -no_tls1_2
 sudo openssl s_server -key domain1.key.pem -cert domain1.cert.pem -accept 443 -www
 
